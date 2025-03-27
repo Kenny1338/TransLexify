@@ -1,0 +1,213 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@layer base {
+  :root {
+    --background: 210 40% 98%;
+    --foreground: 222 47% 11%;
+
+    --card: 0 0% 100%;
+    --card-foreground: 222 47% 11%;
+
+    --popover: 0 0% 100%;
+    --popover-foreground: 222 47% 11%;
+
+    --primary: 214 100% 67%;
+    --primary-foreground: 210 40% 98%;
+
+    --secondary: 210 40% 96%;
+    --secondary-foreground: 222 47% 11%;
+
+    --muted: 210 40% 96%;
+    --muted-foreground: 215 16% 47%;
+
+    --accent: 214 100% 97%;
+    --accent-foreground: 222 47% 11%;
+
+    --destructive: 0 84% 60%;
+    --destructive-foreground: 210 40% 98%;
+
+    --border: 214 32% 91%;
+    --input: 214 32% 91%;
+    --ring: 214 100% 67%;
+
+    --radius: 0.75rem;
+  }
+
+  .dark {
+    --background: 222 47% 10%;
+    --foreground: 210 40% 98%;
+
+    --card: 222 47% 11%;
+    --card-foreground: 210 40% 98%;
+
+    --popover: 222 47% 11%;
+    --popover-foreground: 210 40% 98%;
+
+    --primary: 214 100% 67%;
+    --primary-foreground: 210 40% 98%;
+
+    --secondary: 217 33% 18%;
+    --secondary-foreground: 210 40% 98%;
+
+    --muted: 217 33% 18%;
+    --muted-foreground: 215 20% 65%;
+
+    --accent: 217 33% 18%;
+    --accent-foreground: 210 40% 98%;
+
+    --destructive: 0 63% 31%;
+    --destructive-foreground: 210 40% 98%;
+
+    --border: 217 33% 18%;
+    --input: 217 33% 18%;
+    --ring: 214 100% 67%;
+  }
+
+  * {
+    @apply border-border;
+    -webkit-tap-highlight-color: transparent;
+  }
+
+  body {
+    @apply bg-background text-foreground;
+    font-feature-settings: "rlig" 1, "calt" 1;
+    touch-action: manipulation;
+    overflow-x: hidden;
+    width: 100%;
+  }
+  
+  /* Improve mobile input experience */
+  input, textarea {
+    font-size: 16px;
+  }
+  
+  /* Smooth theme transitions */
+  html {
+    transition: background-color 0.3s ease, color 0.3s ease;
+  }
+  
+  /* Improve theme transitions */
+  html.dark .glass-panel {
+    @apply bg-slate-950/80 backdrop-blur-sm border-slate-800/20;
+  }
+  
+  html.light .glass-panel {
+    @apply bg-white/80 backdrop-blur-sm border-white/20;
+  }
+}
+
+@layer components {
+  .glass-panel {
+    @apply bg-white/80 dark:bg-slate-950/80 backdrop-blur-sm border border-white/20 dark:border-slate-800/20 shadow-sm;
+  }
+  
+  .translate-container {
+    @apply relative overflow-hidden transition-all duration-300;
+  }
+  
+  .text-area-container {
+    @apply h-full w-full overflow-hidden rounded-md bg-white/50 dark:bg-slate-900/50 backdrop-blur-sm transition-all duration-300;
+  }
+  
+  .language-selector {
+    @apply flex items-center gap-2 rounded-md px-3 py-1.5 text-sm font-medium transition-colors hover:bg-accent;
+  }
+  
+  .action-button {
+    @apply rounded-full p-2 text-muted-foreground hover:bg-accent hover:text-accent-foreground transition-colors;
+  }
+  
+  .floating-controls {
+    @apply absolute bottom-2 right-2 flex items-center space-x-1;
+  }
+  
+  /* Mobile specific styles */
+  @media (max-width: 640px) {
+    .container {
+      @apply px-2;
+    }
+    
+    .floating-controls {
+      @apply bottom-1 right-1 space-x-0.5;
+    }
+    
+    .language-selector {
+      @apply px-2 py-1 text-xs;
+    }
+    
+    /* Improved touch targets for mobile */
+    .action-button {
+      @apply p-2;
+    }
+    
+    /* Better mobile buttons - removed scale animation */
+    button {
+      @apply transition-colors;
+    }
+    
+    /* Improved mobile animations */
+    .translate-container {
+      @apply transition-all duration-100;
+    }
+  }
+}
+
+/* Custom scrollbar */
+::-webkit-scrollbar {
+  width: 6px;
+  height: 6px;
+}
+
+::-webkit-scrollbar-track {
+  background: transparent;
+}
+
+::-webkit-scrollbar-thumb {
+  background: hsl(var(--muted));
+  border-radius: 4px;
+}
+
+::-webkit-scrollbar-thumb:hover {
+  background: hsl(var(--muted-foreground));
+}
+
+/* Smooth transitions */
+.page-transition-enter {
+  opacity: 0;
+  transform: translateY(10px);
+}
+
+.page-transition-enter-active {
+  opacity: 1;
+  transform: translateY(0);
+  transition: opacity 300ms, transform 300ms;
+}
+
+.page-transition-exit {
+  opacity: 1;
+  transform: translateY(0);
+}
+
+.page-transition-exit-active {
+  opacity: 0;
+  transform: translateY(-10px);
+  transition: opacity 300ms, transform 300ms;
+}
+
+/* Text-to-speech animation */
+.speaking {
+  position: relative;
+}
+
+.speaking::after {
+  content: '';
+  position: absolute;
+  bottom: -4px;
+  left: 0;
+  width: 100%;
+  height: 2px;
+  background: hsl(var(--primary));
+  animation: pulse-light 1s infinite;
+}
