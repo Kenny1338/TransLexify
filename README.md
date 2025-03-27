@@ -2,6 +2,8 @@
 
 A modern AI-powered translation tool that enables precise and context-aware translations across multiple languages.
 
+[![GitHub Repository](https://img.shields.io/badge/GitHub-Repository-black?style=for-the-badge&logo=github)](https://github.com/Kenny1338/TransLexify)
+
 ## 📸 Screenshots
 
 Here's a visual overview of TransLexify in action:
@@ -43,7 +45,7 @@ Here's a visual overview of TransLexify in action:
 
 1. Clone the repository:
 ```bash
-git clone <repository-url>
+git clone git@github.com:Kenny1338/TransLexify.git
 cd TransLexify
 ```
 

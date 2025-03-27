@@ -1,4 +1,3 @@
-
 import { Github, Heart } from "lucide-react";
 import { Button } from "@/components/ui/button";
 
@@ -12,7 +11,12 @@ export default function Footer() {
           using React and Tailwind CSS.
         </p>
         <div className="flex items-center gap-4">
-          <Button variant="outline" size="sm" className="h-8 rounded-full px-3">
+          <Button
+            variant="outline"
+            size="sm"
+            className="h-8 rounded-full px-3"
+            onClick={() => window.open("https://github.com/Kenny1338/TransLexify", "_blank")}
+          >
             <Github className="mr-2 h-4 w-4" />
             <span>GitHub</span>
           </Button>
