@@ -17,10 +17,13 @@ Here's a visual overview of TransLexify in action:
 ## 🚀 Features
 
 - 🤖 AI-powered translations using OpenAI
+- 🔍 Automatic language detection built-in by default
+- 🎭 Theme detection and domain-specific translations
+- 🎯 Context-aware translations with alternative options
+- 🎨 Tone adjustment (formal, informal, friendly, professional)
 - 🗣️ High-quality text-to-speech with ElevenLabs
 - 🌐 Support for multiple languages
 - ✨ Modern, user-friendly interface
-- 🎯 Context-aware translations
 - ⚡ Real-time translation
 - 📱 Responsive design
 
@@ -105,6 +108,25 @@ TransLexify/
 ├── public/            # Static Assets
 └── ...
 ```
+
+## 🌟 Advanced Features
+
+### Automatic Language Detection
+TransLexify automatically detects the language of your input text, making it easier to translate from any language without having to manually select the source language.
+
+### Theme Detection
+The application can identify the theme or domain of your text (technical, medical, legal, business, academic, literary, etc.) to provide more accurate, domain-specific translations.
+
+### Tone Adjustment
+Select from different tones for your translations:
+- **Formal**: For official documents and professional settings
+- **Informal**: For casual conversations and everyday use
+- **Friendly**: Warm and welcoming language
+- **Professional**: Business-appropriate language
+- **Neutral**: Default balanced tone
+
+### High-Quality Text-to-Speech
+Powered by ElevenLabs' advanced text-to-speech technology, TransLexify offers natural-sounding voice output for your translations, with fallback to the browser's built-in speech synthesis when needed.
 
 ## 🤝 Contributing
 
