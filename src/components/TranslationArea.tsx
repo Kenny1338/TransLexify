@@ -1,4 +1,3 @@
-
 import { useState, useEffect, useRef } from "react";
 import { ClipboardCopy, Volume2, VolumeX, RotateCcw } from "lucide-react";
 import { toast } from "sonner";
@@ -87,7 +86,7 @@ export default function TranslationArea({
         
         {isLoading && (
           <div className="absolute inset-0 flex items-center justify-center bg-background/30 backdrop-blur-sm">
-            <div className="h-8 w-8 animate-pulse-light rounded-full border-2 border-primary border-t-transparent"></div>
+            <div className="h-8 w-8 animate-spin rounded-full border-2 border-primary border-t-transparent"></div>
           </div>
         )}
         
