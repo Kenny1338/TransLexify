@@ -17,6 +17,7 @@ Here's a visual overview of TransLexify in action:
 ## 🚀 Features
 
 - 🤖 AI-powered translations using OpenAI
+- 🗣️ High-quality text-to-speech with ElevenLabs
 - 🌐 Support for multiple languages
 - ✨ Modern, user-friendly interface
 - 🎯 Context-aware translations
@@ -34,12 +35,14 @@ Here's a visual overview of TransLexify in action:
 - **Form Handling**: React Hook Form
 - **Validation**: Zod
 - **State Management**: React Query
+- **Text-to-Speech**: ElevenLabs API & Web Speech API (fallback)
 
 ## 📋 Prerequisites
 
 - Node.js (version 16 or higher)
 - npm or yarn
 - OpenAI API Key
+- ElevenLabs API Key (optional, for enhanced TTS)
 
 ## 🚀 Installation
 
@@ -56,9 +59,10 @@ npm install
 
 3. Configure environment variables:
    - Create a `.env` file in the root directory
-   - Add your OpenAI API key:
+   - Add your API keys:
 ```env
 VITE_OPENAI_API_KEY=your_openai_api_key
+VITE_ELEVENLABS_API_KEY=your_elevenlabs_api_key
 ```
 
 4. Start the development server:
@@ -123,3 +127,4 @@ This project is licensed under the MIT License - see the [LICENSE](LICENSE) file
 - [Tailwind CSS](https://tailwindcss.com/)
 - [shadcn/ui](https://ui.shadcn.com/)
 - [OpenAI](https://openai.com/)
+- [ElevenLabs](https://elevenlabs.io/)
