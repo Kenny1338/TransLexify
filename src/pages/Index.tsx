@@ -1,4 +1,3 @@
-
 import { useState, useEffect } from "react";
 import { useTranslation } from "@/hooks/useTranslation";
 import { useTranslationHistory } from "@/hooks/useTranslationHistory";
@@ -31,6 +30,11 @@ const Index = () => {
     contextualAlternatives,
     contextualMode,
     toggleContextualMode,
+    translationTheme,
+    setTranslationTheme,
+    translationTone,
+    setTranslationTone,
+    detectedTheme
   } = useTranslation();
   
   const { addToHistory } = useTranslationHistory();
@@ -146,6 +150,11 @@ const Index = () => {
             isTranslating={isTranslating}
             contextualMode={contextualMode}
             onToggleContextualMode={toggleContextualMode}
+            theme={translationTheme}
+            onThemeChange={setTranslationTheme}
+            tone={translationTone}
+            onToneChange={setTranslationTone}
+            detectedTheme={detectedTheme}
           />
           
           {/* Mobile view */}
@@ -169,6 +178,9 @@ const Index = () => {
               toggleContextualPanel={toggleContextualPanel}
               contextualAlternatives={contextualAlternatives}
               handleSelectAlternative={handleSelectAlternative}
+              theme={translationTheme}
+              tone={translationTone}
+              detectedTheme={detectedTheme}
             />
           )}
           
@@ -196,6 +208,9 @@ const Index = () => {
               toggleContextualPanel={toggleContextualPanel}
               contextualAlternatives={contextualAlternatives}
               handleSelectAlternative={handleSelectAlternative}
+              theme={translationTheme}
+              tone={translationTone}
+              detectedTheme={detectedTheme}
             />
           )}
         </div>

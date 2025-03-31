@@ -1,4 +1,3 @@
-
 export interface Language {
   code: string;
   name: string;
@@ -6,16 +5,37 @@ export interface Language {
   direction?: 'ltr' | 'rtl';
 }
 
+export type TranslationTheme = 
+  | 'auto' 
+  | 'general' 
+  | 'technical' 
+  | 'medical' 
+  | 'legal' 
+  | 'business' 
+  | 'academic' 
+  | 'literary' 
+  | 'casual';
+
+export type TranslationTone = 
+  | 'neutral' 
+  | 'formal' 
+  | 'informal' 
+  | 'friendly' 
+  | 'professional';
+
 export interface TranslationRequest {
   text: string;
   sourceLang: string;
   targetLang: string;
   includeContextual?: boolean;
+  theme?: TranslationTheme;
+  tone?: TranslationTone;
 }
 
 export interface TranslationResponse {
   translatedText: string;
   detectedLanguage?: string;
+  detectedTheme?: TranslationTheme;
   alternatives?: ContextualTranslation[];
   error?: string;
 }
@@ -23,6 +43,8 @@ export interface TranslationResponse {
 export interface ContextualTranslation {
   text: string;
   explanation: string;
+  context?: string;
+  style?: string;
 }
 
 export interface TextToSpeechOptions {

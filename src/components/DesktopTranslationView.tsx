@@ -1,9 +1,9 @@
-
 import { Dispatch, SetStateAction, MouseEvent } from "react";
 import { Grip } from "lucide-react";
 import { Separator } from "@/components/ui/separator";
 import TranslationArea from "@/components/TranslationArea";
 import ContextualTranslationPanel from "@/components/ContextualTranslationPanel";
+import { TranslationTheme, TranslationTone, ContextualTranslation } from "@/types";
 
 interface DesktopTranslationViewProps {
   sourceText: string;
@@ -25,8 +25,11 @@ interface DesktopTranslationViewProps {
   contextualMode: boolean;
   isContextualPanelCollapsed: boolean;
   toggleContextualPanel: () => void;
-  contextualAlternatives: any[];
+  contextualAlternatives: ContextualTranslation[];
   handleSelectAlternative: (text: string) => void;
+  theme: TranslationTheme;
+  tone: TranslationTone;
+  detectedTheme?: TranslationTheme;
 }
 
 export default function DesktopTranslationView({
@@ -51,6 +54,9 @@ export default function DesktopTranslationView({
   toggleContextualPanel,
   contextualAlternatives,
   handleSelectAlternative,
+  theme,
+  tone,
+  detectedTheme,
 }: DesktopTranslationViewProps) {
   return (
     <>
@@ -118,6 +124,9 @@ export default function DesktopTranslationView({
             targetLang={targetLang}
             isCollapsed={isContextualPanelCollapsed}
             onToggleCollapse={toggleContextualPanel}
+            theme={theme}
+            detectedTheme={detectedTheme}
+            tone={tone}
           />
         </div>
       )}

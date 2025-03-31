@@ -1,6 +1,5 @@
-
 import { useState } from 'react';
-import { ContextualTranslation } from '@/types';
+import { ContextualTranslation, TranslationTheme, TranslationTone } from '@/types';
 import { 
   Card,
   Card as CardPrimitive,
@@ -29,6 +28,9 @@ interface ContextualTranslationPanelProps {
   targetLang: string;
   isCollapsed?: boolean;
   onToggleCollapse?: () => void;
+  theme?: TranslationTheme;
+  tone?: TranslationTone;
+  detectedTheme?: TranslationTheme;
 }
 
 export default function ContextualTranslationPanel({
@@ -36,7 +38,10 @@ export default function ContextualTranslationPanel({
   onSelectAlternative,
   targetLang,
   isCollapsed = false,
-  onToggleCollapse
+  onToggleCollapse,
+  theme,
+  tone,
+  detectedTheme
 }: ContextualTranslationPanelProps) {
   const [activeIndex, setActiveIndex] = useState<number | null>(null);
 
@@ -49,125 +54,120 @@ export default function ContextualTranslationPanel({
     }
   };
 
-  if (isCollapsed) {
-    return (
-      <div className="mt-4 animate-pulse-light">
-        <Button 
-          variant="outline" 
-          onClick={onToggleCollapse}
-          className="flex gap-2 items-center border-primary/40 text-primary border-dashed hover:border-primary"
-        >
-          <Lightbulb className="h-4 w-4 text-primary" />
-          <span>Show contextual suggestions</span>
-        </Button>
-      </div>
-    );
-  }
+  const handleUseAlternative = (text: string, index: number) => {
+    setActiveIndex(index);
+    onSelectAlternative(text);
+  };
 
-  if (!alternatives || alternatives.length === 0) {
-    return null;
-  }
+  if (alternatives.length === 0) return null;
 
   return (
-    <div className="mt-6 space-y-4 animate-in fade-in-0 slide-in-from-bottom-4 duration-300">
-      <div className="flex items-center justify-between bg-primary/10 p-3 rounded-lg border border-primary/20">
-        <div className="flex items-center gap-2">
-          <div className="flex items-center justify-center h-8 w-8 rounded-full bg-primary/15">
-            <Sparkles className="h-4 w-4 text-primary" />
-          </div>
-          <div>
-            <h3 className="font-medium text-lg">Contextual Translation Suggestions</h3>
-            <p className="text-sm text-muted-foreground">Different translation options based on context and nuances</p>
-          </div>
-        </div>
-        
-        {onToggleCollapse && (
-          <Button variant="ghost" size="icon" onClick={onToggleCollapse} className="text-muted-foreground hover:text-foreground">
-            <MinusCircle className="h-5 w-5" />
-          </Button>
-        )}
-      </div>
-      
-      <div className="grid gap-4 md:grid-cols-2">
-        {alternatives.map((alt, index) => (
-          <Card 
-            key={index} 
-            className={`transition-all duration-200 overflow-hidden ${
-              activeIndex === index 
-                ? 'ring-2 ring-primary/70 shadow-md shadow-primary/10' 
-                : 'hover:border-primary/30 hover:shadow-sm'
-            }`}
-          >
-            <CardHeader className="pb-2 relative pt-8">
-              <Badge variant="outline" className="absolute top-3 left-3 bg-primary/5 hover:bg-primary/10 text-primary font-medium">
-                Alternative {index + 1}
-              </Badge>
-              
-              <div className="absolute top-3 right-3 flex">
-                <Button 
-                  variant="ghost" 
-                  size="icon"
-                  onClick={() => copyAlternative(alt.text)}
-                  className="h-8 w-8 rounded-full"
-                  aria-label="Copy to clipboard"
-                >
-                  <ClipboardCopy className="h-4 w-4" />
-                </Button>
-                
-                <Popover>
-                  <PopoverTrigger asChild>
-                    <Button 
-                      variant="ghost" 
-                      size="icon"
-                      className="h-8 w-8 rounded-full"
-                      aria-label="More information"
-                    >
-                      <Info className="h-4 w-4" />
-                    </Button>
-                  </PopoverTrigger>
-                  <PopoverContent className="w-80 p-4">
-                    <div className="space-y-2">
-                      <h4 className="font-medium flex items-center gap-1.5">
-                        <MessageCircle className="h-4 w-4 text-primary" />
-                        Context Explanation
-                      </h4>
-                      <p className="text-sm text-muted-foreground">{alt.explanation}</p>
-                    </div>
-                  </PopoverContent>
-                </Popover>
-              </div>
-              
-              <CardTitle className="text-xl mt-2 mb-1">
-                {alt.text}
-              </CardTitle>
-            </CardHeader>
+    <Card className="contextual-panel relative bg-card/50 backdrop-blur-sm">
+      <CardHeader className="pb-2">
+        <div className="flex items-center justify-between">
+          <div className="flex items-center gap-2">
+            <Lightbulb className="h-5 w-5 text-yellow-500" />
+            <CardTitle className="text-base">Alternative Translations</CardTitle>
             
-            <CardContent>
-              <div className="text-sm mb-4 p-3 bg-muted/30 rounded-md border border-muted/50">
-                <p className="text-muted-foreground">{alt.explanation}</p>
-              </div>
-              
-              <Button 
-                variant={activeIndex === index ? "default" : "outline"} 
-                className={`w-full ${activeIndex === index ? 'bg-primary' : 'hover:bg-primary/10 hover:text-primary border-primary/20'}`}
-                onClick={() => {
-                  onSelectAlternative(alt.text);
-                  setActiveIndex(index);
-                }}
+            {detectedTheme && (
+              <Popover>
+                <PopoverTrigger asChild>
+                  <Button variant="outline" size="sm" className="ml-2 gap-1 text-xs">
+                    <Sparkles className="h-3.5 w-3.5 text-purple-500" />
+                    Detected Theme: {detectedTheme}
+                    <Info className="h-3.5 w-3.5 text-muted-foreground" />
+                  </Button>
+                </PopoverTrigger>
+                <PopoverContent className="w-80 p-4 text-sm">
+                  <p>TransLexify has detected the theme of your text as <strong>{detectedTheme}</strong>.</p>
+                  <p className="mt-2">This helps provide more accurate and contextually relevant translations.</p>
+                </PopoverContent>
+              </Popover>
+            )}
+            
+            {theme && theme !== "general" && (
+              <Badge variant="outline" className="gap-1 text-xs">
+                <MessageCircle className="h-3 w-3" />
+                {theme}
+              </Badge>
+            )}
+            
+            {tone && tone !== "neutral" && (
+              <Badge variant="outline" className="gap-1 text-xs">
+                <MessageCircle className="h-3 w-3" />
+                {tone}
+              </Badge>
+            )}
+          </div>
+          
+          {onToggleCollapse && (
+            <Button
+              variant="ghost"
+              size="icon"
+              onClick={onToggleCollapse}
+              aria-label={isCollapsed ? "Expand alternatives" : "Collapse alternatives"}
+            >
+              {isCollapsed ? (
+                <Sparkles className="h-4 w-4" />
+              ) : (
+                <MinusCircle className="h-4 w-4" />
+              )}
+            </Button>
+          )}
+        </div>
+        <CardDescription>
+          Choose an alternative translation or stick with the main one
+        </CardDescription>
+      </CardHeader>
+      
+      {!isCollapsed && (
+        <CardContent>
+          <div className="grid gap-3 sm:grid-cols-2 lg:grid-cols-3">
+            {alternatives.map((alt, index) => (
+              <div
+                key={index}
+                className={`relative rounded-lg border bg-background/80 p-3 transition-all hover:bg-accent/50 ${
+                  activeIndex === index ? "ring-2 ring-primary" : ""
+                }`}
               >
-                {activeIndex === index ? (
-                  <>
-                    <CheckCircle2 className="h-4 w-4 mr-2" />
-                    Selected
-                  </>
-                ) : (
-                  "Use this translation"
-                )}
-              </Button>
-            </CardContent>
-          </Card>
-        ))}
-      </div>
-    </div>
+                <div className="mb-2 flex items-start justify-between">
+                  <div>
+                    <Badge variant="outline" className="mb-1 text-xs">
+                      {alt.context || "Alternative"}
+                    </Badge>
+                    {alt.style && (
+                      <Badge variant="secondary" className="ml-1 mb-1 text-xs">
+                        {alt.style}
+                      </Badge>
+                    )}
+                  </div>
+                  <div className="flex gap-1">
+                    <Button
+                      variant="ghost"
+                      size="icon"
+                      className="h-6 w-6"
+                      onClick={() => copyAlternative(alt.text)}
+                    >
+                      <ClipboardCopy className="h-3.5 w-3.5" />
+                    </Button>
+                    <Button
+                      variant="ghost"
+                      size="icon"
+                      className="h-6 w-6 text-green-500"
+                      onClick={() => handleUseAlternative(alt.text, index)}
+                    >
+                      <CheckCircle2 className="h-3.5 w-3.5" />
+                    </Button>
+                  </div>
+                </div>
+                <p className="text-sm" dir={targetLang === 'ar' || targetLang === 'he' ? 'rtl' : 'ltr'}>
+                  {alt.text}
+                </p>
+              </div>
+            ))}
+          </div>
+        </CardContent>
+      )}
+    </Card>
   );
 }

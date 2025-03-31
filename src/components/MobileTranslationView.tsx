@@ -1,6 +1,5 @@
-
 import { Dispatch, SetStateAction } from "react";
-import { CharacterCount } from "@/types";
+import { CharacterCount, TranslationTheme, TranslationTone, ContextualTranslation } from "@/types";
 import TranslationArea from "@/components/TranslationArea";
 import ContextualTranslationPanel from "@/components/ContextualTranslationPanel";
 
@@ -21,8 +20,11 @@ interface MobileTranslationViewProps {
   contextualMode: boolean;
   isContextualPanelCollapsed: boolean;
   toggleContextualPanel: () => void;
-  contextualAlternatives: any[];
+  contextualAlternatives: ContextualTranslation[];
   handleSelectAlternative: (text: string) => void;
+  theme: TranslationTheme;
+  tone: TranslationTone;
+  detectedTheme?: TranslationTheme;
 }
 
 export default function MobileTranslationView({
@@ -44,6 +46,9 @@ export default function MobileTranslationView({
   toggleContextualPanel,
   contextualAlternatives,
   handleSelectAlternative,
+  theme,
+  tone,
+  detectedTheme,
 }: MobileTranslationViewProps) {
   return (
     <div className="mt-4 flex flex-col space-y-4">
@@ -89,6 +94,9 @@ export default function MobileTranslationView({
           targetLang={targetLang}
           isCollapsed={isContextualPanelCollapsed}
           onToggleCollapse={toggleContextualPanel}
+          theme={theme}
+          tone={tone}
+          detectedTheme={detectedTheme}
         />
       )}
     </div>
